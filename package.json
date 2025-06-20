@@ -1,0 +1,23 @@
+{
+  "name": "ai-grammar-corrector",
+  "version": "1.0.0",
+  "description": "A simple grammar correction app using Express and Google Gemini API.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "server": "node app.js"
+  },
+  "keywords": [
+    "ai",
+    "gemini",
+    "express",
+    "grammar"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}

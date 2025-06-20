@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Grammar Corrector</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem; box-sizing: border-box; }
+    .container { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
+    h1 { text-align: center; color: #1a73e8; }
+    textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; min-height: 150px; box-sizing: border-box; resize: vertical; }
+    button { display: block; width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin-top: 1rem; transition: background-color 0.3s; }
+    button:hover { background-color: #1558b3; }
+    .results { margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem; }
+    .results h3 { color: #555; margin-bottom: 0.5rem; }
+    .results pre { 
+      background-color: #f9f9f9; 
+      padding: 1rem; 
+      border-radius: 8px; 
+      white-space: pre-wrap; /* This makes the text wrap */
+      word-wrap: break-word;   /* This breaks long words if necessary */
+      font-size: 1rem; 
+      margin-top: 0;
+      font-family: inherit; /* Inherit the nice font from the body */
+    }
+    .original-text { color: #d32f2f; border-left: 3px solid #d32f2f; }
+    .corrected-text { color: #2e7d32; border-left: 3px solid #2e7d32; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>AI Grammar Corrector</h1>
+    
+    <form action="/correct" method="POST">
+      <textarea name="text" placeholder="Enter text to correct..."><%= originaltext %></textarea>
+      <button type="submit">Correct Text</button>
+    </form>
+
+    <!-- This section will only appear if there is corrected text to show -->
+    <% if (corrected) { %>
+      <div class="results">
+        
+        <!-- Display Original Text (if it exists) -->
+        <% if (originaltext) { %>
+          <h3>Original Text:</h3>
+          <!-- This <pre> tag will preserve the line breaks from the user's input -->
+          <pre class="original-text"><%= originaltext %></pre>
+        <% } %>
+
+        <h3>Correction:</h3>
+        <!-- This <pre> tag ensures the corrected text from the AI is displayed with line breaks -->
+        <pre class="corrected-text"><%= corrected %></pre>
+      </div>
+    <% } %>
+
+  </div>
+
+</body>
+</html>
