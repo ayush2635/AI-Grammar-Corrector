@@ -1,55 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Basic metadata for the document -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Grammar Corrector</title>
+  
+  <!-- === START FAVICON & APP ICON LINKS === -->
+  <!-- These links provide icons for different devices and contexts -->
+
+  <!-- Icon for Apple devices (iPhones, iPads) when saved to home screen -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Icons for modern web browsers, providing different sizes -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- Link to the Web App Manifest for Android devices and PWA functionality -->
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Fallback icon for very old browsers that only support the .ico format -->
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <!-- === END FAVICON & APP ICON LINKS === -->
+
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem; box-sizing: border-box; }
-    .container { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-    h1 { text-align: center; color: #1a73e8; }
-    textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; min-height: 150px; box-sizing: border-box; resize: vertical; }
-    button { display: block; width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin-top: 1rem; transition: background-color 0.3s; }
-    button:hover { background-color: #1558b3; }
-    .results { margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem; }
-    .results h3 { color: #555; margin-bottom: 0.5rem; }
+    /* Basic styling for the entire page */
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+      background-color: #f4f7f6; 
+      color: #333; 
+      display: flex; /* Enables flexbox layout */
+      justify-content: center; /* Centers content horizontally */
+      align-items: center; /* Centers content vertically */
+      min-height: 100vh; /* Makes the body at least the full height of the viewport */
+      margin: 0; 
+      padding: 1rem; 
+      box-sizing: border-box; /* Ensures padding doesn't add to the total width/height */
+    }
+
+    /* Container for the main content with a white background and shadow */
+    .container { 
+      background: #fff; 
+      padding: 2rem; 
+      border-radius: 12px; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+      width: 100%; 
+      max-width: 600px; 
+    }
+    
+    /* Header container to align the logo and title horizontally */
+    .header-title {
+      display: flex;
+      align-items: center; /* Vertically aligns items in the center */
+      justify-content: center; /* Horizontally aligns items in the center */
+      gap: 15px; /* Adds space between the logo and the text */
+    }
+
+    /* Logo image styling with a fixed height */
+    .header-title img {
+      height: 40px; /* You can adjust the logo size as needed */
+    }
+
+    /* Main title (h1) styling with a specific color and no extra margin */
+    .header-title h1 { 
+      color: #0047FF; 
+      margin: 0; /* Removes the default margin from the h1 element */
+    }
+
+    /* Textarea styling for user input */
+    textarea { 
+      width: 100%; 
+      padding: 10px; 
+      border-radius: 8px; 
+      border: 1px solid #ccc; 
+      font-size: 1rem; 
+      min-height: 150px; 
+      box-sizing: border-box; 
+      resize: vertical; /* Allows the user to resize the textarea vertically */
+      margin-top: 1.5rem;
+    }
+
+    /* Submit button styling */
+    button { 
+      display: block; 
+      width: 100%; 
+      padding: 12px; 
+      background-color: #2261ff; 
+      color: white; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 1.1rem; 
+      cursor: pointer; 
+      margin-top: 1rem; 
+      transition: background-color 0.3s; /* Smooth transition for the hover effect */
+    }
+
+    /* Style for the button when the mouse hovers over it */
+    button:hover { 
+      background-color: #1558b3; 
+    }
+
+    /* Container for displaying the results with a top margin and border */
+    .results { 
+      margin-top: 2rem; 
+      border-top: 1px solid #eee; 
+      padding-top: 1.5rem; 
+    }
+
+    /* Headings inside the results section (e.g., "Original Text:") */
+    .results h3 { 
+      color: #555; 
+      margin-bottom: 0.5rem; 
+    }
+
+    /* Styling for the preformatted text blocks used for original and corrected text */
     .results pre { 
       background-color: #f9f9f9; 
       padding: 1rem; 
       border-radius: 8px; 
-      white-space: pre-wrap; /* This makes the text wrap */
-      word-wrap: break-word;   /* This breaks long words if necessary */
+      white-space: pre-wrap; /* This preserves whitespace and wraps text to the next line */
+      word-wrap: break-word;   /* This breaks long words if they would overflow */
       font-size: 1rem; 
       margin-top: 0;
-      font-family: inherit; /* Inherit the nice font from the body */
+      font-family: inherit; /* Makes the pre text use the same font as the rest of the body */
     }
-    .original-text { color: #d32f2f; border-left: 3px solid #d32f2f; }
-    .corrected-text { color: #2e7d32; border-left: 3px solid #2e7d32; }
+
+    /* Specific styling for the original text block with a red border and text color */
+    .original-text { 
+      color: #d32f2f; 
+      border-left: 3px solid #d32f2f; 
+    }
+
+    /* Specific styling for the corrected text block with a green border and text color */
+    .corrected-text { 
+      color: #2e7d32; 
+      border-left: 3px solid #2e7d32; 
+    }
   </style>
 </head>
 <body>
 
+  <!-- This is the main content container -->
   <div class="container">
-    <h1>AI Grammar Corrector</h1>
     
+    <!-- Header section containing the logo and the main page title -->
+    <div class="header-title">
+      <!-- The logo image, which is served from the public/images folder -->
+      <img src="/images/LOGO.png" alt="Logo">
+      <!-- The main page title -->
+      <h1>AI Grammar Corrector</h1>
+    </div>
+    
+    <!-- This form sends the user's text to the server for correction -->
     <form action="/correct" method="POST">
+      <!-- The textarea is pre-filled with the original text if it's available (e.g., after a submission) -->
       <textarea name="text" placeholder="Enter text to correct..."><%= originaltext %></textarea>
+      <!-- The submit button sends the form data to the "/correct" route on the server -->
       <button type="submit">Correct Text</button>
     </form>
 
-    <!-- This section will only appear if there is corrected text to show -->
+    <!-- EJS Conditional Rendering: This block will only be displayed if the "corrected" variable has content -->
     <% if (corrected) { %>
       <div class="results">
         
-        <!-- Display Original Text (if it exists) -->
+        <!-- Nested Conditional: This block only shows if the "originaltext" variable exists -->
         <% if (originaltext) { %>
           <h3>Original Text:</h3>
-          <!-- This <pre> tag will preserve the line breaks from the user's input -->
+          <!-- The <pre> tag is used to preserve whitespace and line breaks from the user's input -->
           <pre class="original-text"><%= originaltext %></pre>
         <% } %>
 
         <h3>Correction:</h3>
-        <!-- This <pre> tag ensures the corrected text from the AI is displayed with line breaks -->
+        <!-- This <pre> tag shows the corrected text, also preserving any line breaks from the AI's response -->
         <pre class="corrected-text"><%= corrected %></pre>
       </div>
     <% } %>
