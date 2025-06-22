@@ -32,7 +32,7 @@ To run this project on your local machine, follow these steps:
 
 1.  **Clone the repository:**
     ```
-    git clone https://github.com/YOUR_USERNAME/ai-grammar-corrector.git
+    git clone https://github.com/ayush2635/ai-grammar-corrector.git
     ```
 
 2.  **Navigate to the project directory:**
