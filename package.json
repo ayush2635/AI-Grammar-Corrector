@@ -12,7 +12,8 @@
     "ai",
     "gemini",
     "express",
-    "grammar"
+    "grammar",
+    "correction"
   ],
   "author": "",
   "license": "ISC",
