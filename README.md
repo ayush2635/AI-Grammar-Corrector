@@ -11,8 +11,6 @@ A simple yet powerful web application that corrects grammar and spelling mistake
 
 ![AI Grammar Corrector Screenshot](./public/images/screenshot.png)
 
-***Note:** To add your own screenshot, take a picture of the running application, name the file `screenshot.png`, and place it inside the `/public/images/` directory.*
-
 ## Features
 
 -   **Instant Grammar Correction:** Leverages the powerful Google Gemini API to provide accurate corrections for spelling and grammar.
