@@ -63,7 +63,7 @@ app.post('/correct', async (req, res) => {
   try {
     // Retrieve the API key and model name from environment variables and constants.
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-    const GEMINI_MODEL = 'gemini-1.5-flash';
+    const GEMINI_MODEL = 'gemini-2.5-flash';
 
     // Construct the detailed prompt for the Gemini API.
     // This prompt explicitly instructs the AI to correct grammar and preserve line breaks.
